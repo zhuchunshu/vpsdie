@@ -30,7 +30,7 @@
             <div class="page-body">
                 <div class="container-xl">
                     @yield('header')
-                    <div class="row row-deck row-cards">
+                    <div class="row row-cards justify-content-center">
                         @yield('content')
                     </div>
                 </div>
@@ -41,7 +41,7 @@
 
     <script src="/js/jquery-3.6.0.min.js"></script>
     <script src="{{ mix('js/vue.js') }}"></script>
-    <script src="{{ '/tabler/libs/apexcharts/dist/apexcharts.min.js' }}"></script>
+    <script src="{{ mix('js/vpsdie.js') }}"></script>
     <!-- Tabler Core -->
     <script src="{{ '/tabler/js/tabler.min.js' }}"></script>
     @yield('scripts')

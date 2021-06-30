@@ -21,7 +21,7 @@
                     <a href="/create" class="btn btn-primary">
                         <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                         <!-- SVG icon code -->
-                        新增主机商
+                        投稿
                     </a>
                 </div>
             </div>

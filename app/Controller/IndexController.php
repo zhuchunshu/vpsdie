@@ -34,4 +34,18 @@ class IndexController extends AbstractController
     public function list(){
         return view("list");
     }
+
+    /**
+     * @GetMapping(path="/create")
+     */
+    public function create(){
+        return view("create");
+    }
+
+    /**
+     * @GetMapping(path="/list/create")
+     */
+    public function list_create(){
+        return view("create_list");
+    }
 }

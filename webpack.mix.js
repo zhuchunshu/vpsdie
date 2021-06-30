@@ -48,8 +48,9 @@ mix.sass(resources_path("sass/app.scss"),"css").version();
 
 
 
+require("./pack2.mix")
+
 // 设置public目录
 mix.setPublicPath(public_path());
 
 mix.setResourceRoot(resources_path());
-

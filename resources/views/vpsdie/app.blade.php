@@ -15,7 +15,7 @@
     <link rel="icon" href="/logo.svg" type="image/x-icon" />
     <link rel="shortcut icon" href="/logo.svg" type="image/x-icon" />
     <!-- 自定义CSS -->
-    @foreach(\App\CodeFec\Ui\functions::get("css") as $key => $value)
+    @foreach (\App\CodeFec\Ui\functions::get('css') as $key => $value)
         <link rel="stylesheet" href="{{ $value }}">
     @endforeach
     @yield('css')
@@ -23,6 +23,7 @@
 
 <body class="antialiased">
     <div id="app" class="wrapper {{ path_class() }}-page">
+        @include('vpsdie.header')
         <div class="page-wrapper">
             <div class="page-body">
                 <div class="container-xl">

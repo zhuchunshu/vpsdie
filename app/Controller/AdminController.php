@@ -22,9 +22,12 @@ use HyperfExt\Hashing\Hash;
 
 class AdminController
 {
-    public function index(Ui $ui,Card $card): \Psr\Http\Message\ResponseInterface
+    public function index(Ui $ui,Card $card)
     {
-        return "Hello World";
+        return $ui
+        ->title("仪表盘")
+        ->body("Hello World")
+        ->render();
     }
 
     public function login()

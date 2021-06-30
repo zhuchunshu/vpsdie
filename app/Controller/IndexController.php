@@ -11,17 +11,20 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
+use Hyperf\HttpServer\Annotation\Controller;
+use Hyperf\HttpServer\Annotation\GetMapping;
 use Hyperf\View\RenderInterface;
 
+/**
+ * @Controller
+ */
 class IndexController extends AbstractController
 {
-    public function index(RenderInterface $render): \Psr\Http\Message\ResponseInterface
+    /**
+     * @GetMapping(path="/")
+     */
+    public function index()
     {
-        menu()->add(2, [
-            'url' => '/',
-            'name' => '仪表盘',
-            'icon' => '',
-        ]);
-        return $render->render('index');
+        return view("index");
     }
 }

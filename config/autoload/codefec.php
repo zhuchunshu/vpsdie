@@ -1,6 +1,6 @@
 <?php
 return [
     "app"=>[
-        "name" => "CodeFec"
+        "name" => "VPSDIE"
     ]
 ];

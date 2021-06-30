@@ -1,4 +1,4 @@
-@extends("app")
+@extends("vpsdie.app")
 @section('content')
     <div class="col-md-12">
         <div class="card">

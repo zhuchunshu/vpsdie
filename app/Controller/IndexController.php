@@ -27,4 +27,11 @@ class IndexController extends AbstractController
     {
         return view("index");
     }
+
+    /**
+     * @GetMapping(path="/list")
+     */
+    public function list(){
+        return view("list");
+    }
 }

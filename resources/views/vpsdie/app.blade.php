@@ -13,6 +13,8 @@
     <link href="{{ '/tabler/css/tabler-vendors.min.css' }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="icon" href="/logo.svg" type="image/x-icon" />
+    <meta name="keywords" content="VPSDIE,黑名单主机商,失信主机商,失信VPS商家">
+    <meta name="description" content="VPSDIE,黑名单主机商,失信主机商,失信VPS商家列表">
     <link rel="shortcut icon" href="/logo.svg" type="image/x-icon" />
     <!-- 自定义CSS -->
     @foreach (\App\CodeFec\Ui\functions::get('css') as $key => $value)
@@ -27,6 +29,7 @@
         <div class="page-wrapper">
             <div class="page-body">
                 <div class="container-xl">
+                    @yield('header')
                     <div class="row row-deck row-cards">
                         @yield('content')
                     </div>

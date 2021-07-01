@@ -17842,44 +17842,54 @@ if (document.getElementById("create_content")) {
     },
     methods: {
       submit: function submit() {
-        axios.post("/vpsdie/api/Create", {
-          title: this.title,
-          content: this.content,
-          "class": this.selected
-        }).then(function (response) {
-          var data = response.data;
-
-          if (data.success === true) {
-            sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
-              title: data.result.msg,
-              icon: "success"
-            });
-          } else {
-            var content = "";
-
-            if (data.result instanceof Array) {
-              data.result.forEach(function (element) {
-                content = content + element + "\n";
-              });
-              sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
-                icon: "error",
-                title: "出错啦!",
-                text: content
-              });
-            } else {
-              sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
-                title: data.result.msg,
-                icon: "error"
-              });
-            }
-          }
-        })["catch"](function (error) {
-          console.error(error);
+        if (this.selected == 0) {
           sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
-            title: "请求出错,详细请查看控制台",
+            title: "请选择主机商",
             icon: "error"
           });
-        });
+        } else {
+          axios.post("/vpsdie/api/Create", {
+            title: this.title,
+            content: this.content.getHTML(),
+            class_id: this.selected
+          }).then(function (response) {
+            var data = response.data;
+
+            if (data.success === true) {
+              sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+                title: data.result.msg,
+                icon: "success"
+              });
+              setTimeout(function () {
+                location.href = "/";
+              }, 1500);
+            } else {
+              var content = "";
+
+              if (data.result instanceof Array) {
+                data.result.forEach(function (element) {
+                  content = content + element + "\n";
+                });
+                sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+                  icon: "error",
+                  title: "出错啦!",
+                  text: content
+                });
+              } else {
+                sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+                  title: data.result.msg,
+                  icon: "error"
+                });
+              }
+            }
+          })["catch"](function (error) {
+            console.error(error);
+            sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+              title: "请求出错,详细请查看控制台",
+              icon: "error"
+            });
+          });
+        }
       }
     }
   };
@@ -17889,7 +17899,7 @@ if (document.getElementById("create_content")) {
 function removeBlock(str) {
   if (str) {
     var reg = /\【.*\】/gi;
-    str = str.replace(reg, '');
+    str = str.replace(reg, "");
   }
 
   return str;

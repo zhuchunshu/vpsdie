@@ -73,17 +73,17 @@ if (document.getElementById("create_content")) {
             .post("/vpsdie/api/ClassData", {
               id: newval,
             })
-            .then(response=>{
-                var data = response.data;
-                if(data.success===false){
-                    swal({
-                        title: data.result.msg,
-                        icon: "error",
-                      });
-                }else{
-                    var title = removeBlock(this.title);
-                    this.title = "【"+data.result.data.name+"】" + title
-                }
+            .then((response) => {
+              var data = response.data;
+              if (data.success === false) {
+                swal({
+                  title: data.result.msg,
+                  icon: "error",
+                });
+              } else {
+                var title = removeBlock(this.title);
+                this.title = "【" + data.result.data.name + "】" + title;
+              }
             })
             .catch(function (error) {
               console.error(error);
@@ -148,45 +148,55 @@ if (document.getElementById("create_content")) {
     },
     methods: {
       submit() {
-        axios
-          .post("/vpsdie/api/Create", {
-              title:this.title,
-              content:this.content,
-              class:this.selected
-          })
-          .then(function (response) {
-            var data = response.data;
-            if (data.success === true) {
-              swal({
-                title: data.result.msg,
-                icon: "success",
-              });
-            } else {
-              var content = "";
-              if (data.result instanceof Array) {
-                data.result.forEach((element) => {
-                  content = content + element + "\n";
-                });
-                swal({
-                  icon: "error",
-                  title: "出错啦!",
-                  text: content,
-                });
-              } else {
+        if (this.selected == 0) {
+          swal({
+            title: "请选择主机商",
+            icon: "error",
+          });
+        } else {
+          axios
+            .post("/vpsdie/api/Create", {
+              title: this.title,
+              content: this.content.getHTML(),
+              class_id: this.selected,
+            })
+            .then(function (response) {
+              var data = response.data;
+              if (data.success === true) {
                 swal({
                   title: data.result.msg,
-                  icon: "error",
+                  icon: "success",
                 });
+                setTimeout(() => {
+                    location.href="/";
+                }, 1500);
+              } else {
+                var content = "";
+                if (data.result instanceof Array) {
+                  data.result.forEach((element) => {
+                    content = content + element + "\n";
+                  });
+                  swal({
+                    icon: "error",
+                    title: "出错啦!",
+                    text: content,
+                  });
+                } else {
+                  swal({
+                    title: data.result.msg,
+                    icon: "error",
+                  });
+                }
               }
-            }
-          })
-          .catch(function (error) {
-            console.error(error);
-            swal({
-              title: "请求出错,详细请查看控制台",
-              icon: "error",
+            })
+            .catch(function (error) {
+              console.error(error);
+              swal({
+                title: "请求出错,详细请查看控制台",
+                icon: "error",
+              });
             });
-          });
+        }
       },
     },
   };
@@ -194,12 +204,10 @@ if (document.getElementById("create_content")) {
   Vue.createApp(create_content).mount("#create_content");
 }
 
-
-function removeBlock(str)
-{
-	if (str) {
-		var reg = /\【.*\】/gi;
-		str = str.replace(reg, '');
-	} 
-	return str;
+function removeBlock(str) {
+  if (str) {
+    var reg = /\【.*\】/gi;
+    str = str.replace(reg, "");
+  }
+  return str;
 }

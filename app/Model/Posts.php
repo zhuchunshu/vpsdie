@@ -12,7 +12,7 @@ namespace App\Model;
  * @property \Carbon\Carbon $created_at 
  * @property \Carbon\Carbon $updated_at 
  */
-class Post extends Model
+class Posts extends Model
 {
     /**
      * The table associated with the model.

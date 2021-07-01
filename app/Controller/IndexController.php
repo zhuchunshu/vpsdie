@@ -27,7 +27,7 @@ class IndexController extends AbstractController
      */
     public function index()
     {
-        $pages = Posts::query()->orderBy('created_at', 'desc')->paginate(12);
+        $pages = Posts::query()->select(['title','content'])->orderBy('created_at', 'desc')->paginate(12);
         return view('index',['page' => $pages]);
     }
 

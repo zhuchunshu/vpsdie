@@ -32,12 +32,24 @@
 
 @section('content')
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title">
-                    Hello World
-                </h3>
+        @if ($page->count())
+            <div class="row row-cards">
+                @foreach ($page as $value)
+                    <div class="col-md-6">
+                        <a href="/{{ $value->id }}.html" class="card card-body border-0">
+                            @if($value->title)
+                                <h3 class="card-title">
+                                    {{ $value->title }}
+                                </h3>
+                            @endif
+                            {!! subHtml(\Illuminate\Support\Str::limit($value->content, 150, '...')) !!}
+                        </a>
+                    </div>
+                @endforeach
             </div>
-        </div>
+        @else
+            <div class="card"><h3 class="card-body card-title">暂无内容</h3></div>
+        @endif
     </div>
+    {!! make_page($page) !!}
 @endsection

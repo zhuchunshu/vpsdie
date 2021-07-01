@@ -65,9 +65,11 @@
                 暂无内容
                 @endif
             </div>
+            @if($page->hasPages())
             <div class="card-footer">
                 {!! make_page($page) !!}
             </div>
+            @endif
         </div>
     </div>
 @endsection

@@ -397,8 +397,9 @@ if (!function_exists('verify_ip')) {
     }
 }
 
-if(!function_exists("make_page")){
-    function make_page($page,$default = "default"){
+if (!function_exists("make_page")) {
+    function make_page($page, $default = "default")
+    {
         $window = UrlWindow::make($page);
 
         $elements = array_filter([
@@ -408,6 +409,179 @@ if(!function_exists("make_page")){
             is_array($window['last']) ? '...' : null,
             $window['last'],
         ]);
-        return view("shared.page.".$default,['paginator' => $page,'elements' => $elements]);
+        return view("shared.page." . $default, ['paginator' => $page, 'elements' => $elements]);
+    }
+}
+
+if (!function_exists("exhtml")) {
+    function exhtml($descclear)
+    {
+        $descclear = str_replace("\r", "", $descclear); //过滤换行
+        $descclear = str_replace("\n", "", $descclear); //过滤换行
+        $descclear = str_replace("\t", "", $descclear); //过滤换行
+        $descclear = str_replace("\r\n", "", $descclear); //过滤换行
+        $descclear = preg_replace("/\s+/", " ", $descclear); //过滤多余回车
+        $descclear = preg_replace("/<[ ]+/si", "<", $descclear); //过滤<__("<"号后面带空格)
+        $descclear = preg_replace("/<\!--.*?-->/si", "", $descclear); //过滤html注释
+        $descclear = preg_replace("/<(\!.*?)>/si", "", $descclear); //过滤DOCTYPE
+        $descclear = preg_replace("/<(\/?html.*?)>/si", "", $descclear); //过滤html标签
+        $descclear = preg_replace("/<(\/?head.*?)>/si", "", $descclear); //过滤head标签
+        $descclear = preg_replace("/<(\/?meta.*?)>/si", "", $descclear); //过滤meta标签
+        $descclear = preg_replace("/<(\/?body.*?)>/si", "", $descclear); //过滤body标签
+        $descclear = preg_replace("/<(\/?link.*?)>/si", "", $descclear); //过滤link标签
+        $descclear = preg_replace("/<(\/?form.*?)>/si", "", $descclear); //过滤form标签
+        $descclear = preg_replace("/cookie/si", "COOKIE", $descclear); //过滤COOKIE标签
+        $descclear = preg_replace("/<(applet.*?)>(.*?)<(\/applet.*?)>/si", "", $descclear); //过滤applet标签
+        $descclear = preg_replace("/<(\/?applet.*?)>/si", "", $descclear); //过滤applet标签
+        $descclear = preg_replace("/<(style.*?)>(.*?)<(\/style.*?)>/si", "", $descclear); //过滤style标签
+        $descclear = preg_replace("/<(\/?style.*?)>/si", "", $descclear); //过滤style标签
+        $descclear = preg_replace("/<(title.*?)>(.*?)<(\/title.*?)>/si", "", $descclear); //过滤title标签
+        $descclear = preg_replace("/<(\/?title.*?)>/si", "", $descclear); //过滤title标签
+        $descclear = preg_replace("/<(object.*?)>(.*?)<(\/object.*?)>/si", "", $descclear); //过滤object标签
+        $descclear = preg_replace("/<(\/?objec.*?)>/si", "", $descclear); //过滤object标签
+        $descclear = preg_replace("/<(noframes.*?)>(.*?)<(\/noframes.*?)>/si", "", $descclear); //过滤noframes标签
+        $descclear = preg_replace("/<(\/?noframes.*?)>/si", "", $descclear); //过滤noframes标签
+        $descclear = preg_replace("/<(i?frame.*?)>(.*?)<(\/i?frame.*?)>/si", "", $descclear); //过滤frame标签
+        $descclear = preg_replace("/<(\/?i?frame.*?)>/si", "", $descclear); //过滤frame标签
+        $descclear = preg_replace("/<(script.*?)>(.*?)<(\/script.*?)>/si", "", $descclear); //过滤script标签
+        $descclear = preg_replace("/<(\/?script.*?)>/si", "", $descclear); //过滤script标签
+        $descclear = preg_replace("/javascript/si", "Javascript", $descclear); //过滤script标签
+        $descclear = preg_replace("/vbscript/si", "Vbscript", $descclear); //过滤script标签
+        $descclear = preg_replace("/on([a-z]+)\s*=/si", "On\\1=", $descclear); //过滤script标签
+        $descclear = preg_replace("/&#/si", "&＃", $descclear); //过滤script标签，如javAsCript:alert();
+        //使用正则替换
+        $pat = "/<(\/?)(script|i?frame|style|html|body|li|i|map|title|img|link|span|u|font|table|tr|b|marquee|td|strong|div|a|meta|\?|\%)([^>]*?)>/isU";
+        $descclear = preg_replace($pat, "", $descclear);
+        return $descclear;
+    }
+}
+
+if (!function_exists("subHtml")) {
+    /**
+     * 取HTML,并自动补全闭合
+     *
+     * param $html
+     *
+     * param $length
+     *
+     * param $end
+     */
+    function subHtml($html, $length = 50)
+    {
+        $result = '';
+        $tagStack = array();
+        $len = 0;
+        $contents = preg_split("~(<[^>]+?>)~si", $html, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+        foreach ($contents as $tag) {
+            if (trim($tag) == "") continue;
+            if (preg_match("~<([a-z0-9]+)[^/>]*?/>~si", $tag)) {
+                $result .= $tag;
+            } else if (preg_match("~</([a-z0-9]+)[^/>]*?>~si", $tag, $match)) {
+                if ($tagStack[count($tagStack) - 1] == $match[1]) {
+                    array_pop($tagStack);
+                    $result .= $tag;
+                }
+            } else if (preg_match("~<([a-z0-9]+)[^/>]*?>~si", $tag, $match)) {
+                array_push($tagStack, $match[1]);
+                $result .= $tag;
+            } else if (preg_match("~<!--.*?-->~si", $tag)) {
+                $result .= $tag;
+            } else {
+                if ($len + mstrlen($tag) < $length) {
+                    $result .= $tag;
+                    $len += mstrlen($tag);
+                } else {
+                    $str = msubstr($tag, 0, $length - $len + 1);
+                    $result .= $str;
+                    break;
+                }
+            }
+        }
+        while (!empty($tagStack)) {
+            $result .= '</' . array_pop($tagStack) . '>';
+        }
+        return $result;
+    }
+}
+if (!function_exists("msubstr")) {
+
+    /**
+     * 取中文字符串
+     *
+     * param $string 字符串
+     *
+     * param $start 起始位
+     *
+     * param $length 长度
+     *
+     * param $charset 编码
+     *
+     * param $dot 附加字串
+     */
+    function msubstr($string, $start, $length, $dot = '', $charset = 'UTF-8')
+    {
+        $string = str_replace(array('&', '"', '<', '>', ' '), array('&', '"', '<', '>', ' '), $string);
+        if (strlen($string) <= $length) {
+            return $string;
+        }
+        if (strtolower($charset) == 'utf-8') {
+            $n = $tn = $noc = 0;
+            while ($n < strlen($string)) {
+                $t = ord($string[$n]);
+                if ($t == 9 || $t == 10 || (32 <= $t && $t <= 126)) {
+                    $tn = 1;
+                    $n++;
+                } elseif (194 <= $t && $t <= 223) {
+                    $tn = 2;
+                    $n += 2;
+                } elseif (224 <= $t && $t <= 239) {
+                    $tn = 3;
+                    $n += 3;
+                } elseif (240 <= $t && $t <= 247) {
+                    $tn = 4;
+                    $n += 4;
+                } elseif (248 <= $t && $t <= 251) {
+                    $tn = 5;
+                    $n += 5;
+                } elseif ($t == 252 || $t == 253) {
+                    $tn = 6;
+                    $n += 6;
+                } else {
+                    $n++;
+                }
+                $noc++;
+                if ($noc >= $length) {
+                    break;
+                }
+            }
+            if ($noc > $length) {
+                $n -= $tn;
+            }
+            $strcut = substr($string, 0, $n);
+        } else {
+            for ($i = 0; $i < $length; $i++) {
+                $strcut = "";
+                $strcut .= ord($string[$i]) > 127 ? $string[$i] . $string[++$i] : $string[$i];
+            }
+        }
+        return $strcut . $dot;
+    }
+}
+
+if (!function_exists("mstrlen")) {
+    /**
+     * 得字符串的长度，包括中英文。
+     */
+    function mstrlen($str, $charset = 'UTF-8')
+    {
+        if (function_exists('mb_substr')) {
+            $length = mb_strlen($str, $charset);
+        } elseif (function_exists('iconv_substr')) {
+            $length = iconv_strlen($str, $charset);
+        } else {
+            preg_match_all("/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-f][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/", $str, $ar);
+            $length = count($ar[0]);
+        }
+        return $length;
     }
 }

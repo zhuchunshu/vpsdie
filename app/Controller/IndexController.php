@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
+use App\Model\Posts;
 use App\Model\PostsClass;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\GetMapping;
@@ -26,7 +27,8 @@ class IndexController extends AbstractController
      */
     public function index()
     {
-        return view("index");
+        $pages = Posts::query()->orderBy('created_at', 'desc')->paginate(12);
+        return view('index',['page' => $pages]);
     }
 
     /**

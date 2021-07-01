@@ -31,12 +31,18 @@
 
     <div class="alert alert-important alert-danger alert-dismissible" role="alert">
         <div class="d-flex">
-          <div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-          </div>
-          <div>
-            这里仅用于收录主机商,被收录的商家不一定有黑料,请悉知!
-          </div>
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24"
+                    stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            </div>
+            <div>
+                这里仅用于收录主机商,被收录的商家不一定有黑料,请悉知!
+            </div>
         </div>
         <a class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="close"></a>
     </div>
@@ -45,31 +51,25 @@
 
 @section('content')
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-body">
-                @if($page->count())
-                <div class="row row-cards">
-                    @foreach($page as $key => $value)
+        @if ($page->count())
+            <div class="row row-cards">
+                @foreach ($page as $key => $value)
                     <div class="col-md-6">
-                        <div class="card card-md border-1">
+                        <div class="card border-0">
                             <div class="card-body">
                                 <h3 class="card-title">{{ $value->name }}</h3>
-                                <a href="{{ $value->url }}">{{ $value->url }}</a>
+                                {{ $value->url }}
                             </div>
                         </div>
                     </div>
 
                 @endforeach
-                </div>
-                @else
-                暂无内容
-                @endif
             </div>
-            @if($page->hasPages())
-            <div class="card-footer">
-                {!! make_page($page) !!}
-            </div>
-            @endif
-        </div>
+        @else
+            暂无内容
+        @endif
     </div>
+    @if ($page->hasPages())
+    {!! make_page($page) !!}
+    @endif
 @endsection

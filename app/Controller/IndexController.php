@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
+use App\Model\PostsClass;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\GetMapping;
 use Hyperf\View\RenderInterface;
@@ -32,7 +33,8 @@ class IndexController extends AbstractController
      * @GetMapping(path="/list")
      */
     public function list(){
-        return view("list");
+        $page = PostsClass::paginate(15);
+        return view("list",['page' => $page]);
     }
 
     /**

@@ -13,6 +13,7 @@ declare(strict_types=1);
 use Hyperf\Utils\Context;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Hyperf\Paginator\UrlWindow;
 use Hyperf\View\RenderInterface;
 use App\CodeFec\Menu\MenuInterface;
 use Hyperf\Utils\ApplicationContext;
@@ -393,5 +394,20 @@ if (!function_exists('verify_ip')) {
     function verify_ip($realip)
     {
         return filter_var($realip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+    }
+}
+
+if(!function_exists("make_page")){
+    function make_page($page,$default = "default"){
+        $window = UrlWindow::make($page);
+
+        $elements = array_filter([
+            $window['first'],
+            is_array($window['slider']) ? '...' : null,
+            $window['slider'],
+            is_array($window['last']) ? '...' : null,
+            $window['last'],
+        ]);
+        return view("shared.page.".$default,['paginator' => $page,'elements' => $elements]);
     }
 }

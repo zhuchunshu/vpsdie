@@ -47,6 +47,25 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
+                @if($page->count())
+                <div class="row row-cards">
+                    @foreach($page as $key => $value)
+                    <div class="col-md-6">
+                        <div class="card card-md border-1">
+                            <div class="card-body">
+                                <h3 class="card-title">{{ $value->name }}</h3>
+                                <a href="{{ $value->url }}">{{ $value->url }}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                @endforeach
+                </div>
+                @else
+                暂无内容
+                @endif
+            </div>
+            <div class="card-footer">
                 {!! make_page($page) !!}
             </div>
         </div>

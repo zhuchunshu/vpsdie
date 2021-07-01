@@ -33,7 +33,7 @@ class IndexController extends AbstractController
      * @GetMapping(path="/list")
      */
     public function list(){
-        $page = PostsClass::paginate(15);
+        $page = PostsClass::query()->select("name","url")->paginate(12);
         return view("list",['page' => $page]);
     }
 

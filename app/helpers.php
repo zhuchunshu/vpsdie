@@ -10,6 +10,7 @@ declare(strict_types=1);
  * @license  https://github.com/zhuchunshu/CodeFecHF/blob/master/LICENSE
  */
 
+use Hyperf\Utils\Context;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Hyperf\View\RenderInterface;
@@ -18,6 +19,7 @@ use Hyperf\Utils\ApplicationContext;
 use Illuminate\Support\Facades\File;
 use Hyperf\Contract\SessionInterface;
 use Hyperf\HttpMessage\Stream\SwooleStream;
+use Psr\Http\Message\ServerRequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
 
 function public_path($path = ''): string
@@ -340,7 +342,7 @@ if (!function_exists("deldir")) {
 }
 
 
-if(!function_exists("copy_dir")){
+if (!function_exists("copy_dir")) {
     function copy_dir($src, $dst)
     {
         $dir = opendir($src);
@@ -356,5 +358,40 @@ if(!function_exists("copy_dir")){
             }
         }
         closedir($dir);
+    }
+}
+
+
+if (!function_exists('get_client_ip')) {
+    function get_client_ip()
+    {
+        /**
+         * @var ServerRequestInterface $request
+         */
+        $request = Context::get(ServerRequestInterface::class);
+        $ip_addr = $request->getHeaderLine('x-forwarded-for');
+        if (verify_ip($ip_addr)) {
+            return $ip_addr;
+        }
+        $ip_addr = $request->getHeaderLine('remote-host');
+        if (verify_ip($ip_addr)) {
+            return $ip_addr;
+        }
+        $ip_addr = $request->getHeaderLine('x-real-ip');
+        if (verify_ip($ip_addr)) {
+            return $ip_addr;
+        }
+        $ip_addr = $request->getServerParams()['remote_addr'] ?? '0.0.0.0';
+        if (verify_ip($ip_addr)) {
+            return $ip_addr;
+        }
+        return '0.0.0.0';
+    }
+}
+
+if (!function_exists('verify_ip')) {
+    function verify_ip($realip)
+    {
+        return filter_var($realip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
     }
 }

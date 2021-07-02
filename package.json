@@ -23,6 +23,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "css-what": "^5.0.1",
+    "gitalk": "^1.7.2",
     "glob-parent": "^5.1.2",
     "laravel-mix": "^6.0.20",
     "sweetalert": "^2.1.2",

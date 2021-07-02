@@ -1,5 +1,6 @@
 const { default: axios } = require("axios")
 import swal from 'sweetalert';
+var qs = require('querystring')
 
 const VueAdminSetting = {
     data() {
@@ -33,7 +34,7 @@ const VueAdminSetting = {
             console.log(this.data)
         },
         submit(){
-            axios.post("/api/adminOptionSave",{data:this.data})
+            axios.post("/api/adminOptionSave",{data:qs.stringify(this.data)})
             .then(response=>{
                 var data = response.data;
                 if(data.success===true){

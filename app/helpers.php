@@ -603,3 +603,15 @@ if(!function_exists("admin_auth")){
         return new Admin();
     }
 }
+
+if(!function_exists("de_stringify")){
+    function de_stringify(string $stringify){
+        $result = [];
+        $data = explode("&",$stringify);
+        foreach ($data as $value) {
+            $arr = explode("=",$value);
+            $result[$arr[0]]=$arr[1];
+        }
+        return $result;
+    }
+}

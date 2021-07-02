@@ -146,7 +146,7 @@ class ApiController
      */
     public function adminOptionSave(): array
     {
-        $data = request()->input('data');
+        $data = de_stringify(request()->input('data'));
         if(!is_array($data)){
             return Json_Api(403,false,['msg' => '请提交正确的数据']);
         }

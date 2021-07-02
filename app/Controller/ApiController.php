@@ -155,4 +155,27 @@ class ApiController
         }
         return Json_Api(200,true,['msg' => '更新成功!']);
     }
+
+    /**
+     * @Middleware(AdminMiddleware::class)
+     */
+    public function githubComment(){
+        $result = [];
+        $clientId = AdminOption::query()->where("name","Gitalk_clientID")->first()->value;
+        $clientSecret = AdminOption::query()->where("name","Gitalk_clientSecret")->first()->value;
+        $repo = AdminOption::query()->where("name","Gitalk_repo")->first()->value;
+        $owner = AdminOption::query()->where('name',"Gitalk_owner")->first()->value;
+        $admin = AdminOption::query()->where("name","Gitalk_admin")->first()->value;
+        $admin = explode(',',$admin);
+        $admin_array = [];
+        foreach ($admin as $value){
+            $admin_array[]=$value;
+        }
+        $result["clientID"] = $clientId;
+        $result["clientSecret"] = $clientSecret;
+        $result["repo"] = $repo;
+        $result["owner"] = $owner;
+        $result["admin"] = $admin_array;
+        return Json_Api(200,true,$result);
+    }
 }

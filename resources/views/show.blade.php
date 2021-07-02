@@ -17,6 +17,12 @@
             </div>
         </div>
     </div>
+    <div class="col-md-12">
+        <div id="vue-comment" class="card border-0 card-body">
+            <h3 class="card-title">评论</h3>
+            <div id="gitalk-container"></div>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')

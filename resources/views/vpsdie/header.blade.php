@@ -4,8 +4,8 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-            <a href=".">
-                {{ config('codefec.app.name') }}
+            <a href="/">
+                {{ get_options("title",config('codefec.app.name')) }}
             </a>
         </h1>
         <div class="navbar-nav flex-row order-md-last">

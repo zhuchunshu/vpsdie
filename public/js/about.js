@@ -64698,6 +64698,57 @@ var comment = {
   }
 };
 Vue.createApp(comment).mount("#vue-comment");
+
+if (document.getElementById("vue-list-data")) {
+  var vue_list_data = {
+    data: function data() {
+      return {};
+    },
+    methods: {
+      remove: function remove(id) {
+        sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
+          title: "确定要删除此帖吗?",
+          text: "删除后无法恢复,请谨慎操作",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true
+        }).then(function (willDelete) {
+          if (willDelete) {
+            axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/deletePostsClass", {
+              id: id
+            }).then(function (response) {
+              var data = response.data;
+
+              if (data.success === true) {
+                sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
+                  title: data.result.msg,
+                  icon: 'success'
+                });
+                setTimeout(function () {
+                  location.href = "/list";
+                }, 1200);
+              } else {
+                sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
+                  title: data.result.msg,
+                  icon: 'error'
+                });
+              }
+            })["catch"](function (error) {
+              sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
+                title: "请求出错,详细请查看控制台",
+                icon: "error"
+              });
+              console.error(error);
+            });
+          } else {
+            sweetalert__WEBPACK_IMPORTED_MODULE_2___default()("好的,咱不删");
+          }
+        });
+      }
+    }
+  };
+  Vue.createApp(vue_list_data).mount("#vue-list-data");
+}
 })();
 
 /******/ })()

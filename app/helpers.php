@@ -10,6 +10,7 @@ declare(strict_types=1);
  * @license  https://github.com/zhuchunshu/CodeFecHF/blob/master/LICENSE
  */
 
+use App\CodeFec\Admin\Admin;
 use Hyperf\Utils\Context;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -594,5 +595,11 @@ if(!function_exists("get_options")){
         }else{
             return AdminOption::query()->where("name",$name)->first()->value;
         }
+    }
+}
+
+if(!function_exists("admin_auth")){
+    function admin_auth(){
+        return new Admin();
     }
 }

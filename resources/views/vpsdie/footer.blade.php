@@ -31,6 +31,11 @@
                         Copyright &copy; 2021
                         <a href="." class="link-secondary">{{ config("codefec.app.name","CodeFec") }}</a>
                     </li>
+                    @if(get_options("icp"))
+                    <li class="list-inline-item">
+                        <a href="https://beian.miit.gov.cn/" class="link-secondary">{{ get_options("icp") }}</a>
+                    </li>
+                    @endif
                 </ul>
             </div>
         </div>

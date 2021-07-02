@@ -55,12 +55,12 @@
             <div class="row row-cards">
                 @foreach ($page as $key => $value)
                     <div class="col-md-6">
-                        <div class="card border-0">
+                        <a href="/list/{{ $value->id }}.html" class="card border-0">
                             <div class="card-body">
                                 <h3 class="card-title">{{ $value->name }}</h3>
                                 {{ $value->url }}
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                 @endforeach

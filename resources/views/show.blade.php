@@ -15,6 +15,11 @@
             <div id="show-content" class="card-body markdown vditor-reset">
                 {!! $data->content !!}
             </div>
+            @if(admin_auth()->Check())
+            <div id="vue-footer" class="card-footer">
+                <button @@click="remove('{{ $data->id }}')" class="btn btn-dark">删除</button>
+            </div>
+            @endif
         </div>
     </div>
     <div class="col-md-12">

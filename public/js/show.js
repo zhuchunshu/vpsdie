@@ -80299,7 +80299,7 @@ var comment = {
           // Ensure uniqueness and length less than 50
           distractionFreeMode: false // Facebook-like distraction free mode,
 
-        }).render('gitalk-container');
+        }).render("gitalk-container");
       } else {
         sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
           title: data.result.msg,
@@ -80315,7 +80315,56 @@ var comment = {
     });
   }
 };
-Vue.createApp(comment).mount("#vue-comment");
+Vue.createApp(comment).mount("#vue-comment"); // vue-footer
+
+var vue_footer = {
+  data: function data() {
+    return {};
+  },
+  methods: {
+    remove: function remove(id) {
+      sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
+        title: "确定要删除此帖吗?",
+        text: "删除后无法恢复,请谨慎操作",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      }).then(function (willDelete) {
+        if (willDelete) {
+          axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/deletePosts", {
+            id: id
+          }).then(function (response) {
+            var data = response.data;
+
+            if (data.success === true) {
+              sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
+                title: data.result.msg,
+                icon: 'success'
+              });
+              setTimeout(function () {
+                location.href = "/";
+              }, 1200);
+            } else {
+              sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
+                title: data.result.msg,
+                icon: 'error'
+              });
+            }
+          })["catch"](function (error) {
+            sweetalert__WEBPACK_IMPORTED_MODULE_3___default()({
+              title: "请求出错,详细请查看控制台",
+              icon: "error"
+            });
+            console.error(error);
+          });
+        } else {
+          sweetalert__WEBPACK_IMPORTED_MODULE_3___default()("好的,咱不删");
+        }
+      });
+    }
+  }
+};
+Vue.createApp(vue_footer).mount("#vue-footer");
 })();
 
 /******/ })()

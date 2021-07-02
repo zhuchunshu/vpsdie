@@ -14,6 +14,8 @@ namespace App\Controller;
 
 use App\Model\AdminOption;
 use App\Model\AdminPlugin;
+use App\Model\Posts;
+use App\Model\PostsClass;
 use Hyperf\DbConnection\Db;
 use Illuminate\Support\Arr;
 use App\Middleware\AdminMiddleware;
@@ -168,9 +170,6 @@ class ApiController
         return Json_Api(200,true,$result);
     }
 
-    /**
-     * @Middleware(AdminMiddleware::class)
-     */
     public function githubComment(){
         $result = [];
         $clientId = AdminOption::query()->where("name","Gitalk_clientID")->first()->value;
@@ -189,6 +188,34 @@ class ApiController
         $result["owner"] = $owner;
         $result["admin"] = $admin_array;
         return Json_Api(200,true,$result);
+    }
+
+    /**
+     * @Middleware(AdminMiddleware::class)
+     */
+    public function deletePosts(){
+        if(!request()->input("id")){
+            return Json_Api(403,false,['msg' => 'id不存在']);
+        }
+        if(!Posts::query()->where("id",request()->input("id"))->count()){
+            return Json_Api(403,false,['msg' => '被删除的帖子不存在']);
+        }
+        Posts::query()->where("id",request()->input("id"))->delete();
+        return Json_Api(200,true,['msg' => '删除成功!']);
+    }
+
+    /**
+     * @Middleware(AdminMiddleware::class)
+     */
+    public function deletePostsClass(){
+        if(!request()->input("id")){
+            return Json_Api(403,false,['msg' => 'id不存在']);
+        }
+        if(!PostsClass::query()->where("id",request()->input("id"))->count()){
+            return Json_Api(403,false,['msg' => '被删除的分类不存在']);
+        }
+        PostsClass::query()->where("id",request()->input("id"))->delete();
+        return Json_Api(200,true,['msg' => '删除成功!']);
     }
 
 }

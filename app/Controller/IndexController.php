@@ -35,7 +35,7 @@ class IndexController extends AbstractController
      * @GetMapping(path="/list")
      */
     public function list(){
-        $page = PostsClass::query()->select("name","url")->paginate(12);
+        $page = PostsClass::query()->select("id","name","url")->paginate(12);
         return view("list",['page' => $page]);
     }
 
@@ -70,4 +70,17 @@ class IndexController extends AbstractController
     public function about(){
         return view("about");
     }
+
+    /**
+     * @GetMapping(path="/list/{id}.html")
+     */
+    public function listData($id){
+        if(!PostsClass::query()->where('id',$id)->count()){
+            return admin_abort(['msg'=>'页面不存在'],404);
+        }
+        $data = PostsClass::query()->where('id',$id)->first();
+        $posts = Posts::query()->where('class_id',$data->id)->paginate(12);
+        return view('list_data',['data' => $data,'page' => $posts]);
+    }
+
 }

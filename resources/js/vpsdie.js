@@ -113,6 +113,11 @@ if (document.getElementById("create_content")) {
         toolbarConfig: {
           pin: true,
         },
+        preview: {
+          markdown: {
+            toc: true
+          }
+        },
         cache: {
           enable: false,
         },

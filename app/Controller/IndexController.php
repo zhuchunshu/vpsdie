@@ -50,6 +50,17 @@ class IndexController extends AbstractController
      * @GetMapping(path="/list/create")
      */
     public function list_create(){
-        return view("create_list");
+        return view('create_list');
+    }
+
+    /**
+     * @GetMapping(path="/{id}.html")
+     */
+    public function show($id){
+        if(!Posts::query()->where('id',$id)->count()){
+            return admin_abort(['msg'=>'页面不存在'],404);
+        }
+        $data = Posts::query()->where('id',$id)->with('classData')->first();
+        return view('show',['data' => $data]);
     }
 }

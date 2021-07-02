@@ -3,14 +3,17 @@
 declare (strict_types=1);
 namespace App\Model;
 
+use Carbon\Carbon;
+use Hyperf\Database\Model\Relations\BelongsTo;
+
 /**
  * @property int $id 
  * @property int $class_id 
  * @property string $title 
  * @property string $content 
  * @property string $author 
- * @property \Carbon\Carbon $created_at 
- * @property \Carbon\Carbon $updated_at 
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class Posts extends Model
 {
@@ -32,4 +35,12 @@ class Posts extends Model
      * @var array
      */
     protected $casts = ['id' => 'integer', 'class_id' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
+
+    /**
+     * @return BelongsTo
+     */
+    public function classData(): BelongsTo
+    {
+        return $this->belongsTo(PostsClass::class, 'class_id', 'id');
+    }
 }

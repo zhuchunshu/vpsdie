@@ -1,5 +1,5 @@
 {
-    "name": "hyperf/hyperf-skeleton",
+    "name": "zhuchunshu/vpsdie",
     "type": "project",
     "keywords": [
         "php",
@@ -9,8 +9,8 @@
         "microservice",
         "middleware"
     ],
-    "description": "A coroutine framework that focuses on hyperspeed and flexible, specifically use for build microservices and middlewares.",
-    "license": "Apache-2.0",
+    "description": "VPS黑名单商家收集程序",
+    "license": "MIT",
     "require": {
         "php": ">=7.3",
         "ext-json": "*",

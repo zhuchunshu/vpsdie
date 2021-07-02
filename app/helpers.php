@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 use Hyperf\Paginator\UrlWindow;
 use Hyperf\View\RenderInterface;
 use App\CodeFec\Menu\MenuInterface;
+use App\Model\AdminOption;
 use Hyperf\Utils\ApplicationContext;
 use Illuminate\Support\Facades\File;
 use Hyperf\Contract\SessionInterface;
@@ -583,5 +584,15 @@ if (!function_exists("mstrlen")) {
             $length = count($ar[0]);
         }
         return $length;
+    }
+}
+
+if(!function_exists("get_options")){
+    function get_options($name,$default=""){
+        if(!AdminOption::query()->where("name",$name)->count()){
+            return $default;
+        }else{
+            return AdminOption::query()->where("name",$name)->first()->value;
+        }
     }
 }

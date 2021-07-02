@@ -2126,6 +2126,28 @@ var VueAdminSetting = {
       data: {}
     };
   },
+  beforeMount: function beforeMount() {
+    var _this = this;
+
+    axios.post("/api/adminOptionList").then(function (response) {
+      var data = response.data;
+
+      if (data.success === true) {
+        _this.data = data.result;
+      } else {
+        sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+          title: data.result.msg,
+          icon: 'error'
+        });
+      }
+    })["catch"](function (error) {
+      console.error(error);
+      sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+        title: "请求出错,详细请查看控制台",
+        icon: "error"
+      });
+    });
+  },
   methods: {
     submit: function submit() {
       axios.post("/api/adminOptionSave", {

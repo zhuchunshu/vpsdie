@@ -63,4 +63,11 @@ class IndexController extends AbstractController
         $data = Posts::query()->where('id',$id)->with('classData')->first();
         return view('show',['data' => $data]);
     }
+
+    /**
+     * @GetMapping(path="/about")
+     */
+    public function about(){
+        return view("about");
+    }
 }

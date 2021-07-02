@@ -159,6 +159,18 @@ class ApiController
     /**
      * @Middleware(AdminMiddleware::class)
      */
+    public function adminOptionList(): array
+    {
+        $result = [];
+        foreach (AdminOption::query()->select('name', 'value')->get() as $value){
+            $result[$value->name]=$value->value;
+        }
+        return Json_Api(200,true,$result);
+    }
+
+    /**
+     * @Middleware(AdminMiddleware::class)
+     */
     public function githubComment(){
         $result = [];
         $clientId = AdminOption::query()->where("name","Gitalk_clientID")->first()->value;
@@ -178,4 +190,5 @@ class ApiController
         $result["admin"] = $admin_array;
         return Json_Api(200,true,$result);
     }
+
 }

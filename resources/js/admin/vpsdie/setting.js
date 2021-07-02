@@ -29,6 +29,9 @@ const VueAdminSetting = {
         })
     },
     methods: {
+        print(){
+            console.log(this.data)
+        },
         submit(){
             axios.post("/api/adminOptionSave",{data:this.data})
             .then(response=>{

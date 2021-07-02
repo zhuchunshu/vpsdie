@@ -2149,6 +2149,9 @@ var VueAdminSetting = {
     });
   },
   methods: {
+    print: function print() {
+      console.log(this.data);
+    },
     submit: function submit() {
       axios.post("/api/adminOptionSave", {
         data: this.data

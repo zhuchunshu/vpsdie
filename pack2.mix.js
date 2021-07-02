@@ -15,6 +15,7 @@ function resources_path($path){
 }
 
 mix.js(resources_path("js/vpsdie.js"),"js").version();
+mix.js(resources_path("js/admin/vpsdie/setting.js"),"js/admin/vpsdie").version();
 mix.js(resources_path("js/show.js"),"js").version();
 
 // 设置public目录

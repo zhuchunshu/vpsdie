@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\AdminOption;
 use App\Model\AdminPlugin;
 use Hyperf\DbConnection\Db;
 use Illuminate\Support\Arr;
@@ -136,5 +137,22 @@ class ApiController
         } else {
             return Json_Api(403, false, ["data" => "#"]);
         }
+    }
+
+    /**
+     * @Middleware(AdminMiddleware::class)
+     */
+    public function adminOptionSave(): array
+    {
+        $data = request()->input('data');
+        if(!is_array($data)){
+            return Json_Api(403,false,['msg' => '请提交正确的数据']);
+        }
+        foreach ($data as $key=>$value){
+            $name = ['name' => $key];
+            $values = ['value' => $value];
+            AdminOption::query()->updateOrInsert($name,$values);
+        }
+        return Json_Api(200,true,['msg' => '更新成功!']);
     }
 }

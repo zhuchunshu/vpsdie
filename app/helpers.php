@@ -610,7 +610,7 @@ if(!function_exists("de_stringify")){
         $data = explode("&",$stringify);
         foreach ($data as $value) {
             $arr = explode("=",$value);
-            $result[$arr[0]]=$arr[1];
+            $result[$arr[0]]=urldecode($arr[1]);
         }
         return $result;
     }

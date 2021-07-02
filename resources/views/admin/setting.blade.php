@@ -79,7 +79,6 @@
             </div>
             <div class="col-md-12" style="margin-top: 10px">
                 <button class="btn btn-dark" type="submit">提交</button>
-                <button class="btn btn-dark" type="button" @@click="print">打印</button>
             </div>
         </div>
     </form>

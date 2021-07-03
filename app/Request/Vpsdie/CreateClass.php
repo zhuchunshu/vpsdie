@@ -22,7 +22,7 @@ class CreateClass extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required|string|min:2|max:10|unique:posts_class,name",
+            "name" => "required|string|min:2|max:25|unique:posts_class,name",
             "url" => "required|url|unique:posts_class,url"
         ];
     }

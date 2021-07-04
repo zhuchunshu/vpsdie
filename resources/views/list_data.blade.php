@@ -23,11 +23,13 @@
                         <!-- SVG icon code -->
                         投稿
                     </a>
+                    @if(admin_auth()->Check())
                     <button @@click="remove('{{ $data->id }}')" class="btn btn-primary">
                         <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                         <!-- SVG icon code -->
                         删除
                     </button>
+                    @endif
                 </div>
             </div>
         </div>

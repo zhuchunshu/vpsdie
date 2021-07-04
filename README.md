@@ -6,19 +6,19 @@
 
 1.
 
-![./assets/截屏2021-07-03 下午12.14.48](./assets/截屏2021-07-03 下午12.14.48.png)
+![./assets/截屏2021-07-03 下午12.14.48](https://raw.githubusercontent.com/zhuchunshu/vpsdie/master/assets/%E6%88%AA%E5%B1%8F2021-07-03%20%E4%B8%8B%E5%8D%8812.13.41.png)
 
 2.
 
-![./assets/截屏2021-07-03 下午12.14.48.png](./assets/截屏2021-07-03 下午12.14.48.png)
+![./assets/截屏2021-07-03 下午12.14.48.png](https://raw.githubusercontent.com/zhuchunshu/vpsdie/master/assets/%E6%88%AA%E5%B1%8F2021-07-03%20%E4%B8%8B%E5%8D%8812.14.24.png)
 
 3.
 
-![./assets/截屏2021-07-03 下午12.14.48.png](./assets/截屏2021-07-03 下午12.14.48.png)
+![./assets/截屏2021-07-03 下午12.14.48.png](https://raw.githubusercontent.com/zhuchunshu/vpsdie/master/assets/%E6%88%AA%E5%B1%8F2021-07-03%20%E4%B8%8B%E5%8D%8812.14.41.png)
 
 4.
 
-![./assets/截屏2021-07-03 下午12.14.48.png](./assets/截屏2021-07-03 下午12.14.48.png)
+![./assets/截屏2021-07-03 下午12.14.48.png](https://raw.githubusercontent.com/zhuchunshu/vpsdie/master/assets/%E6%88%AA%E5%B1%8F2021-07-03%20%E4%B8%8B%E5%8D%8812.14.48.png)
 
 ## 安装
 
